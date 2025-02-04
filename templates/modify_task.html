@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Modify Task{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2 style="font-weight:bold">Edit Task: {{ task.title }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="{% url 'index' %}">Back to Task List</a>
+
+</div>
+{% endblock %}
+{% block footer %}
+    <p>&copy; 2025 To-Do List | All rights reserved</p>
+    <p class="small">
+        Built using Django
+    </p>
+{% endblock %}
+

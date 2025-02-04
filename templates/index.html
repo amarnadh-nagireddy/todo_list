@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% if user.is_authenticated %}
+        <h1 id="heading">Task List</h1>
+        {% if tasks %}
+            <h1  class="hTask">Incomplete Tasks</h1>
+            {% for task in tasks %}
+                {% if task.completed == False %}
+                    <div class="matter" style="background-color:#A6CDC6">
+                        <div class="taskTitle">{{ task.title }}</div>
+                        <div class="taskDesc">{{ task.description }}</div>
+                        <div class="taskFooter">
+                            <div class="leftSection">
+                                <div class="lastDate">{{ task.last_date }}</div>
+                            </div>
+                            <div class="rightSection">
+                                <a  href="{% url 'completed_task' task.id %}" class="btn btn-success">Mark as Completed</a>
+                                <div class="buttons">
+                                    <a href="{% url 'modify_task' task.id %}" class="btn btn-secondary">Modify</a>
+                                    <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                {% endif %}
+            {% endfor %}
+            
+        {% else %}
+            <p>No tasks available. Add a new task to get started!</p>
+        {% endif %}
+        <a href="{% url 'new_task' %}" id="addTask" class="btn btn-primary">ADD New Task</a><hr>
+        
+        {% if tasks %}
+            <h1 class="hTask">Completed Tasks</h1>
+            {% for task in tasks %}
+                {% if task.completed%}
+                    <div class="matter1" id="completed" style="background-color:#16404D;color:white;">
+                        <div class="taskTitle" >{{ task.title }}</div>
+                        <div class="taskDesc">{{ task.description }}</div>
+                        <div class="taskFooter">
+                            <div class="leftSection">
+                                <div class="lastDate">{{ task.last_date }}</div>
+                            </div>
+                            <div class="rightSection">
+                                <a  href="{% url 'completed_task' task.id %}" class="btn btn-success">Unmark as Completed</a>
+                                <div class="buttons">
+                                    <a href="{% url 'modify_task' task.id %}" class="btn btn-secondary">Modify</a>
+                                    <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        <p>Login Or Register to access all the features</p>
+    {% endif %}
+   
+</div>
+{% endblock %}
+{% block footer %}
+    <p>&copy; 2025 To-Do List | All rights reserved</p>
+    <p>
+        Built using Django
+    </p>
+{% endblock %}
+
